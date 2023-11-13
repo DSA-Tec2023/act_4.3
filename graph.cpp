@@ -133,3 +133,42 @@ std::vector<std::vector<int> > Graph::read_and_parse_file(std::string fileName) 
     std::cout << "\tFinished reading file" << std::endl;
     return adj;
 }
+
+std::vector<std::vector<std::string> > Graph::read_and_parse_file_string(std::string fileName) {
+    std::vector<std::vector<std::string> > adj; // vector of vectors
+    std::ifstream file(fileName);
+    std::string line;
+
+    int lines_to_read;
+    std::getline(file, line);
+    std::stringstream ss(line);
+    ss >> lines_to_read;
+
+    // Read the second line of the file as a vector of integers
+    std::vector<std::string> int_vector;
+    std::getline(file, line);
+    std::stringstream ss2(line);
+    std::string i;
+    while (ss2 >> i) {
+        int_vector.push_back(i);
+        if (ss2.peek() == ' ')
+            ss2.ignore();
+    }
+
+    // Read the remaining lines of the file as a vector of vectors of strings
+    for (int i = 0; i < lines_to_read; i++) {
+        std::vector<std::string> edge;
+        std::getline(file, line);
+        std::stringstream ss(line);
+        std::string str;
+        while (ss >> str) {
+            edge.push_back(str);
+            if (ss.peek() == ' ')
+                ss.ignore();
+        }
+        adj.push_back(edge);
+    }
+
+    std::cout << "\tFinished reading file" << std::endl;
+    return std::vector<std::vector<std::string> >(); // return an empty vector of vectors of strings
+}

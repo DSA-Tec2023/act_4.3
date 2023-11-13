@@ -48,4 +48,6 @@ public:
 
     std::vector<std::vector<int> > read_and_parse_file(std::string fileName);
 
+    std::vector<std::vector<std::string > > read_and_parse_file_string(std::string fileName);
+
 };
