@@ -5,7 +5,7 @@
 #include <fstream> 
 #include <string>
 #include <sstream>
-#include "appGrafo.hpp"
+#include "graph.hpp"
 
 
 Graph::Graph(int number_nodes) {
