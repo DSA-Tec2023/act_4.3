@@ -6,6 +6,7 @@
 #include <string>
 #include <sstream>
 #include <algorithm>
+#include <utility>
 #include "graph.hpp"
 #include "destination.hpp"
 
@@ -220,28 +221,32 @@ void Graph::show_reference_list() {
 }
 
 void Graph::MNP(int id, int mnp){
-    std::cout << "Hola" << std::endl;
+    //std::cout << "Hola" << std::endl;
     std::vector<int> visitados;
-    std::queue<int> fila;
+    std::queue<std::pair<int, int>> fila;
 
     visitados.push_back(id);
-    fila.push(id);
+    fila.push(std::make_pair(id, 0));
 
-    int coolNum;
-    i = 0;
-    while(i < mnp){
-        coolNum = fila.front();
+    while(!fila.empty()){
+        int currentNode = fila.front().first;
+        int currentDepth = fila.front().second;
         fila.pop();
 
-        for(auto i=adj_list_[coolNum].begin(); i!=adj_list_[coolNum].end(); ++i) {
-            visitados.push_back(*i);
-            fila.push(coolNum);
+        if(currentDepth < mnp){
+            for(auto i=adj_list_[currentNode].begin(); i!=adj_list_[currentNode].end(); ++i) {
+                if(std::find(visitados.begin(), visitados.end(), *i) == visitados.end()){
+                    visitados.push_back(*i);
+                    fila.push(std::make_pair(*i, currentDepth+1));
+                }
+            }
         }
-
-
     }
 
     /*for(int i=0; i< visitados.size(); i++){
         std::cout << visitados[i] << std::endl;
-    }*/
+    }
+    std::cout << std::endl;*/
+
+    std::cout << reference_list.size() - visitados.size() << " ports not reachable." << std::endl;
 }
