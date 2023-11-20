@@ -3,6 +3,7 @@
 #include <list>
 #include <vector>
 #include <string> 
+#include "destination.hpp"
 
 #pragma once
 
@@ -18,6 +19,7 @@ private:
     //Recursive function to visit all adjacent nodes of current node, and
     //their respective adjacent nodes
     void recursiveDFS(int currentNode, bool visited[]);
+    std::vector<Destination> reference_list;
 
 public:
     //Constructor
@@ -48,4 +50,6 @@ public:
 
     std::vector<std::vector<int> > read_and_parse_file(std::string fileName);
     void read_file(std::string file_name); 
+
+    void show_reference_list(); 
 };

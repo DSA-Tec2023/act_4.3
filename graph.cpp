@@ -6,34 +6,7 @@
 #include <string>
 #include <sstream>
 #include "graph.hpp"
-
-class Destination {
-private:
-    std::string name;
-    int id;
-public:
-
-    Destination(std::string name_, int id_) {
-        name = name_;
-        id = id_;
-    }
-    void print_info() {
-        std::cout << "Name: " << name << std::endl;
-        std::cout << "ID: " << id << std::endl;
-    }
-
-    bool operator==(const Destination &other) const { // This is in order to be able to compare between different objects, it only compares whether the name is the same or not.
-        return (name == other.name);
-    }
-
-    int get_id() {
-        return id;
-    }
-
-    std::string get_name() {
-        return name;
-    }
-};
+#include "destination.hpp"
 
 template <typename T>
 bool contains(
@@ -62,7 +35,6 @@ Graph::Graph(int number_nodes) {
 void Graph::insertAdjacency(int node, int adj_node) {
     adj_list_[node].push_back(adj_node);
     adj_list_[adj_node].push_back(node);
-
 
 }
 
@@ -217,6 +189,15 @@ void Graph::read_file(std::string file_name) {
         pairs.push_back(local_vector);
 
     }
-    loadGraph(pairs.size(), pairs); 
+    reference_list = destinations;
+
+    loadGraph(pairs.size(), pairs);
     file.close();
+}
+
+void Graph::show_reference_list() {
+    std::cout << "REFERENCE TABLE" << std::endl;
+    for (int i = 0; i < reference_list.size(); i++) {
+        std::cout << reference_list[i].get_name() << " " << reference_list[i].get_id() << std::endl;
+    }
 }
