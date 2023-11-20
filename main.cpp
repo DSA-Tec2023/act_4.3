@@ -17,4 +17,8 @@ int main() {
 
      */ 
 
+     grafo.read_file("input.txt");
+     grafo.showAdjList();
+     return 0; 
+
 }

@@ -22,22 +22,30 @@ public:
         std::cout << "ID: " << id << std::endl;
     }
 
-    bool operator==(const Destination &other) const {
+    bool operator==(const Destination &other) const { // This is in order to be able to compare between different objects, it only compares whether the name is the same or not.
         return (name == other.name);
+    }
+
+    int get_id() {
+        return id;
+    }
+
+    std::string get_name() {
+        return name;
     }
 };
 
 template <typename T>
 bool contains(
-        const std::vector<T>& vecObj,
-        const T& element)
+    const std::vector<T>& vecObj,
+    const T& element)
 {
     // Get the iterator of first occurrence
     // of given element in vector
     auto it = std::find(
-                    vecObj.begin(),
-                    vecObj.end(),
-                    element) ;
+                  vecObj.begin(),
+                  vecObj.end(),
+                  element) ;
     return it != vecObj.end();
 }
 
@@ -53,7 +61,8 @@ Graph::Graph(int number_nodes) {
 
 void Graph::insertAdjacency(int node, int adj_node) {
     adj_list_[node].push_back(adj_node);
-    //Update adjacency matrix
+    adj_list_[adj_node].push_back(node);
+
 
 }
 
@@ -167,46 +176,47 @@ void Graph::read_file(std::string file_name) {
     std::ifstream file;
     std::string line;
     file.open(file_name);
-    std::vector<std::vector <std::string> > pairs;
+    std::vector<std::vector <int> > pairs;
 
-    int contador = 0; 
+    int contador = 0;
     std::vector<Destination> destinations;
 
     std::getline(file, line);
     for (int i = 0; i < std::stoi(line); i++) {
-        std::vector<std::string> local_vector;
+        std::vector<int> local_vector;
         std::string nodo1, nodo2;
 
         if (!file.is_open()) {
-            std::cerr << "Error opening file" << std::endl;
+            std::cerr << "Error reading from the file" << std::endl;
             exit(1);
         }
 
         file >> nodo1 >> nodo2;
 
-        local_vector.push_back(nodo1);
-        local_vector.push_back(nodo2);
-        pairs.push_back(local_vector);
-
         Destination place = *new Destination(nodo1, contador);
         if (!contains(destinations, place)) {
             destinations.push_back(place);
-            contador++; 
-       
+            contador++;
 
         }
         Destination place_two = *new Destination(nodo2, contador);
         if (!contains(destinations, place_two)) {
             destinations.push_back(place_two);
-            contador++; 
-   
+            contador++;
+
         }
 
-    }
-    // loadGraph(pairs.size(), pairs);
+        for (int i = 0; i < destinations.size(); i++) {
+            if (destinations[i].get_name() == nodo1) {
+                local_vector.push_back(destinations[i].get_id());
+            }
+            if (destinations[i].get_name() == nodo2) {
+                local_vector.push_back(destinations[i].get_id());
+            }
+        }
+        pairs.push_back(local_vector);
 
-    for (int i = 0; i < destinations.size(); i++) {
-        destinations[i].print_info();
     }
+    loadGraph(pairs.size(), pairs); 
     file.close();
 }
