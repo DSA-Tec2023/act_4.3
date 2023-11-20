@@ -27,7 +27,7 @@ public:
     void insertAdjacency(int node, int adj_node);
 
     //Update matrix which represents adjacencies
-    void updateAdjacencyMatrix(int node, int adj_node);
+    void updateAdjacencyMatrix(std::string node, std::string adj_node);
 
     //Traverse list and print
     void showAdjList();
@@ -47,7 +47,5 @@ public:
     void DFS(int firstNode);
 
     std::vector<std::vector<int> > read_and_parse_file(std::string fileName);
-
-    std::vector<std::vector<std::string > > read_and_parse_file_string(std::string fileName);
-
+    void read_file(std::string file_name); 
 };

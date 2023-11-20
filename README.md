@@ -46,5 +46,4 @@ Cai_Mep 3
 ```
 Case 1: 5 ports not reachable from port Cai_Mep with MNP = 2. 
 Case 2: 1 ports not reachable from port Cai_Mep with MNP = 3. 
-
 ```

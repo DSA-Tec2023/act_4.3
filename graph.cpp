@@ -2,11 +2,44 @@
 #include <vector>
 #include <queue>
 #include <list>
-#include <fstream> 
+#include <fstream>
 #include <string>
 #include <sstream>
 #include "graph.hpp"
 
+class Destination {
+private:
+    std::string name;
+    int id;
+public:
+
+    Destination(std::string name_, int id_) {
+        name = name_;
+        id = id_;
+    }
+    void print_info() {
+        std::cout << "Name: " << name << std::endl;
+        std::cout << "ID: " << id << std::endl;
+    }
+
+    bool operator==(const Destination &other) const {
+        return (name == other.name);
+    }
+};
+
+template <typename T>
+bool contains(
+        const std::vector<T>& vecObj,
+        const T& element)
+{
+    // Get the iterator of first occurrence
+    // of given element in vector
+    auto it = std::find(
+                    vecObj.begin(),
+                    vecObj.end(),
+                    element) ;
+    return it != vecObj.end();
+}
 
 Graph::Graph(int number_nodes) {
     number_nodes_ = number_nodes;
@@ -21,15 +54,13 @@ Graph::Graph(int number_nodes) {
 void Graph::insertAdjacency(int node, int adj_node) {
     adj_list_[node].push_back(adj_node);
     //Update adjacency matrix
-    updateAdjacencyMatrix(node,adj_node);
+
 }
 
-void Graph::updateAdjacencyMatrix(int node, int adj_node) {
+void Graph::updateAdjacencyMatrix(std::string node, std::string adj_node) {
     //Place a 1 at position [node][adj_node] to represent the adjacency between the nodes
-    adj_matrix_[node][adj_node] = 1;
+    adj_matrix_[0][0] = 1; // ignoring this for development purposes
 }
-
-
 
 void Graph::showAdjList() {
     for(int i=0; i<number_nodes_; ++i) {
@@ -49,8 +80,6 @@ void Graph::showAdjMatrix() {
         std::cout << "\n";
     }
 }
-
-
 
 void Graph::loadGraph(int m, std::vector<std::vector<int> > adj) {
     for(int i=0; i<m; ++i) {
@@ -117,7 +146,7 @@ std::vector<std::vector<int> > Graph::read_and_parse_file(std::string fileName) 
     std::vector<std::vector<int> > adj; // vector of vectors
     std::ifstream file(fileName);
     std::string line;
-    
+
     while (std::getline(file, line)) {
         std::vector<int> edge;
         std::stringstream ss(line);
@@ -134,41 +163,50 @@ std::vector<std::vector<int> > Graph::read_and_parse_file(std::string fileName) 
     return adj;
 }
 
-std::vector<std::vector<std::string> > Graph::read_and_parse_file_string(std::string fileName) {
-    std::vector<std::vector<std::string> > adj; // vector of vectors
-    std::ifstream file(fileName);
+void Graph::read_file(std::string file_name) {
+    std::ifstream file;
     std::string line;
+    file.open(file_name);
+    std::vector<std::vector <std::string> > pairs;
 
-    int lines_to_read;
+    int contador = 0; 
+    std::vector<Destination> destinations;
+
     std::getline(file, line);
-    std::stringstream ss(line);
-    ss >> lines_to_read;
+    for (int i = 0; i < std::stoi(line); i++) {
+        std::vector<std::string> local_vector;
+        std::string nodo1, nodo2;
 
-    // Read the second line of the file as a vector of integers
-    std::vector<std::string> int_vector;
-    std::getline(file, line);
-    std::stringstream ss2(line);
-    std::string i;
-    while (ss2 >> i) {
-        int_vector.push_back(i);
-        if (ss2.peek() == ' ')
-            ss2.ignore();
-    }
-
-    // Read the remaining lines of the file as a vector of vectors of strings
-    for (int i = 0; i < lines_to_read; i++) {
-        std::vector<std::string> edge;
-        std::getline(file, line);
-        std::stringstream ss(line);
-        std::string str;
-        while (ss >> str) {
-            edge.push_back(str);
-            if (ss.peek() == ' ')
-                ss.ignore();
+        if (!file.is_open()) {
+            std::cerr << "Error opening file" << std::endl;
+            exit(1);
         }
-        adj.push_back(edge);
-    }
 
-    std::cout << "\tFinished reading file" << std::endl;
-    return std::vector<std::vector<std::string> >(); // return an empty vector of vectors of strings
+        file >> nodo1 >> nodo2;
+
+        local_vector.push_back(nodo1);
+        local_vector.push_back(nodo2);
+        pairs.push_back(local_vector);
+
+        Destination place = *new Destination(nodo1, contador);
+        if (!contains(destinations, place)) {
+            destinations.push_back(place);
+            contador++; 
+       
+
+        }
+        Destination place_two = *new Destination(nodo2, contador);
+        if (!contains(destinations, place_two)) {
+            destinations.push_back(place_two);
+            contador++; 
+   
+        }
+
+    }
+    // loadGraph(pairs.size(), pairs);
+
+    for (int i = 0; i < destinations.size(); i++) {
+        destinations[i].print_info();
+    }
+    file.close();
 }

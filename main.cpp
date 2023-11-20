@@ -2,6 +2,7 @@
 #include "graph.hpp"
 
 int main() {
-     std::cout << "Hello, world!" << std::endl; 
+     Graph g(5);
+     g.read_file("input.txt");
      return 0; 
 }
