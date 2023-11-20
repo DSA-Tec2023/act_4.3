@@ -217,6 +217,10 @@ void Graph::read_file(std::string file_name) {
 }
 
 void Graph::show_reference_list() {
+    if (reference_list.size() == 0) {
+        std::cerr << "No reference list" << std::endl;
+        return;
+    }
     std::cout << "REFERENCE TABLE" << std::endl;
     for (int i = 0; i < reference_list.size(); i++) {
         std::cout << reference_list[i].get_name() << " " << reference_list[i].get_id() << std::endl;
