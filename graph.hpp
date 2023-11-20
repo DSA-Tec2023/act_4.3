@@ -52,4 +52,6 @@ public:
     void read_file(std::string file_name); 
 
     void show_reference_list(); 
+
+    void MNP(int id, int mnp);
 };

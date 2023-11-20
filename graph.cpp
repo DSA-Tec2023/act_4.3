@@ -5,6 +5,7 @@
 #include <fstream>
 #include <string>
 #include <sstream>
+#include <algorithm>
 #include "graph.hpp"
 #include "destination.hpp"
 
@@ -192,6 +193,22 @@ void Graph::read_file(std::string file_name) {
     reference_list = destinations;
 
     loadGraph(pairs.size(), pairs);
+    
+    int nq, mnp;
+    std::string puerto_inicio;
+
+    file >> nq;
+    for (int i = 0; i < nq; i++){
+
+        file >> puerto_inicio >> mnp;
+
+        for(int j = 0; j < destinations.size(); j++){
+            if(puerto_inicio == destinations[j].get_name()){
+                MNP(destinations[j].get_id(),mnp);
+            }
+        }
+    }
+
     file.close();
 }
 
@@ -200,4 +217,31 @@ void Graph::show_reference_list() {
     for (int i = 0; i < reference_list.size(); i++) {
         std::cout << reference_list[i].get_name() << " " << reference_list[i].get_id() << std::endl;
     }
+}
+
+void Graph::MNP(int id, int mnp){
+    std::cout << "Hola" << std::endl;
+    std::vector<int> visitados;
+    std::queue<int> fila;
+
+    visitados.push_back(id);
+    fila.push(id);
+
+    int coolNum;
+    i = 0;
+    while(i < mnp){
+        coolNum = fila.front();
+        fila.pop();
+
+        for(auto i=adj_list_[coolNum].begin(); i!=adj_list_[coolNum].end(); ++i) {
+            visitados.push_back(*i);
+            fila.push(coolNum);
+        }
+
+
+    }
+
+    /*for(int i=0; i< visitados.size(); i++){
+        std::cout << visitados[i] << std::endl;
+    }*/
 }
