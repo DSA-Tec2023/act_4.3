@@ -199,13 +199,16 @@ void Graph::read_file(std::string file_name) {
     std::string puerto_inicio;
 
     file >> nq;
+    int caseN = 1;
     for (int i = 0; i < nq; i++){
 
         file >> puerto_inicio >> mnp;
 
         for(int j = 0; j < destinations.size(); j++){
             if(puerto_inicio == destinations[j].get_name()){
+                std::cout << "Case " << caseN << ": ";
                 MNP(destinations[j].get_id(),mnp);
+                caseN++;
             }
         }
     }
@@ -248,5 +251,5 @@ void Graph::MNP(int id, int mnp){
     }
     std::cout << std::endl;*/
 
-    std::cout << reference_list.size() - visitados.size() << " ports not reachable." << std::endl;
+    std::cout << reference_list.size() - visitados.size() << " ports not reachable from port " << reference_list[id].get_name() << " with MNP = " << mnp << std::endl;
 }
