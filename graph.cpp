@@ -230,7 +230,7 @@ void Graph::show_reference_list() {
 void Graph::MNP(int id, int mnp){
     //std::cout << "Hola" << std::endl;
     std::vector<int> visitados;
-    std::queue<std::pair<int, int>> fila;
+    std::queue<std::pair<int, int> > fila;
 
     visitados.push_back(id);
     fila.push(std::make_pair(id, 0));
