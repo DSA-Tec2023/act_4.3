@@ -21,6 +21,7 @@ int main() {
      grafo.showAdjList();
 
      grafo.show_reference_list(); 
+     grafo.MNP(9, 2); 
      return 0; 
 
 }
