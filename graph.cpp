@@ -10,6 +10,18 @@
 #include "graph.hpp"
 #include "destination.hpp"
 
+/*
+Implementación de las funciones de la clase Grafo.
+
+Equipo:
+Andrés Martínez, A00227463
+Fernanda Granados, A01252895
+Santiago Poblete, A01254609
+Martín Tánori, A01252900
+
+Fecha: 19 de noviembre de 2023
+*/
+
 template <typename T>
 bool contains(
     const std::vector<T>& vecObj,
@@ -228,7 +240,6 @@ void Graph::show_reference_list() {
 }
 
 void Graph::MNP(int id, int mnp){
-    //std::cout << "Hola" << std::endl;
     std::vector<int> visitados;
     std::queue<std::pair<int, int> > fila;
 
@@ -249,11 +260,6 @@ void Graph::MNP(int id, int mnp){
             }
         }
     }
-
-    /*for(int i=0; i< visitados.size(); i++){
-        std::cout << visitados[i] << std::endl;
-    }
-    std::cout << std::endl;*/
 
     std::cout << reference_list.size() - visitados.size() << " ports not reachable from port " << reference_list[id].get_name() << " with MNP = " << mnp << std::endl;
 }

@@ -15,6 +15,8 @@ Cai_Mep Cartagena
 Callao Charleston
 Cartagena Charleston
 Charleston Busan
-2
-Cai_Mep 2
+4
+Busan 4
 Cai_Mep 3
+Alexandria 2
+Callao 1

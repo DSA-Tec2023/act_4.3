@@ -3,6 +3,20 @@
 #include <queue> 
 #pragma once
 
+/*
+Declaración e implementación de la clase Destination,
+utilizada para guardar tanto el nombre del puerto como su
+posición en forma de id.
+
+Equipo:
+Andrés Martínez, A00227463
+Fernanda Granados, A01252895
+Santiago Poblete, A01254609
+Martín Tánori, A01252900
+
+Fecha: 19 de noviembre de 2023
+*/
+
 class Destination {
 private:
     std::string name;
